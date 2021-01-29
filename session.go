@@ -29,16 +29,17 @@ var defaultOptions = options{
 	},
 	enableSetCookie:     true,
 	enableSIDInURLQuery: true,
+	sameSite:            http.SameSiteLaxMode,
 }
 
 type options struct {
-	sign           []byte
-	cookieName     string
-	cookieLifeTime int
-	secure         bool
-	domain         string
-	expired        int64
-	sessionID      func() string
+	sign                    []byte
+	cookieName              string
+	cookieLifeTime          int
+	secure                  bool
+	domain                  string
+	expired                 int64
+	sessionID               func() string
 	enableSetCookie         bool
 	enableSIDInURLQuery     bool
 	enableSIDInHTTPHeader   bool
@@ -50,13 +51,11 @@ type options struct {
 // Option A session parameter options
 type Option func(*options)
 
-
 func SetSameSite(site http.SameSite) Option {
 	return func(o *options) {
 		o.sameSite = site
 	}
 }
-
 
 // SetSign Set the session id signature value
 func SetSign(sign []byte) Option {
